@@ -1,4 +1,4 @@
-package com.marianadwarka.store_backend.repo;
+package com.marianadwarka.repo;
 
 //@Repository
 public class CategoryRepoImpl {// implements ICategoryRepo{

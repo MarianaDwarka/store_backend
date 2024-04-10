@@ -1,4 +1,4 @@
-package com.marianadwarka.store_backend;
+package com.marianadwarka;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

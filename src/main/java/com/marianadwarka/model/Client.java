@@ -1,4 +1,4 @@
-package com.marianadwarka.store_backend.model;
+package com.marianadwarka.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

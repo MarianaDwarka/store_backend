@@ -1,4 +1,4 @@
-package com.marianadwarka.store_backend.model;
+package com.marianadwarka.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,21 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-//@Table(name = "tbl_category", schema = "sistemas")
-public class Category {
+public class Provider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer idCategory; //camelCase -> lowerCamelCase / DB: snake _
+    private Integer idProvider;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 50)
-    private String description;
+    @Column(length = 150, nullable = false)
+    private String address;
 
     @Column(nullable = false)
     private boolean enabled;
-
 }

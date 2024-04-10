@@ -1,6 +1,6 @@
-package com.marianadwarka.store_backend.repo;
+package com.marianadwarka.repo;
 
-import com.marianadwarka.store_backend.model.Category;
+import com.marianadwarka.model.Category;
 
 public interface ICategoryRepo extends IGenericRepo<Category, Integer> {
 
