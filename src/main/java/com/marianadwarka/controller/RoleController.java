@@ -2,9 +2,9 @@ package com.marianadwarka.controller;
 
 import com.marianadwarka.dto.GenericResponse;
 import com.marianadwarka.dto.GenericResponseRecord;
-import com.marianadwarka.dto.ProviderDTO;
-import com.marianadwarka.model.Provider;
-import com.marianadwarka.service.IProviderService;
+import com.marianadwarka.dto.RoleDTO;
+import com.marianadwarka.model.Role;
+import com.marianadwarka.service.IRoleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,39 +18,39 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/providers")
+@RequestMapping("/roles")
 @RequiredArgsConstructor
-public class ProviderController {
+public class RoleController {
 
-    private final IProviderService service;
+    private final IRoleService service;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<GenericResponseRecord<ProviderDTO>> readAll() throws Exception{
-        List<ProviderDTO> list = service.readAll().stream().map(this::convertToDto).toList();
+    public ResponseEntity<GenericResponseRecord<RoleDTO>> readAll() throws Exception{
+        List<RoleDTO> list = service.readAll().stream().map(this::convertToDto).toList();
 
         return ResponseEntity.ok(new GenericResponseRecord<>(200, "success", new ArrayList<>(list)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<ProviderDTO>> readById(@PathVariable("id") Integer id) throws Exception{
-        ProviderDTO dto = convertToDto(service.readById(id));
+    public ResponseEntity<GenericResponse<RoleDTO>> readById(@PathVariable("id") Integer id) throws Exception{
+        RoleDTO dto = convertToDto(service.readById(id));
 
         return ResponseEntity.ok(new GenericResponse<>(200, "success", Arrays.asList(dto)));
     }
 
     @PostMapping
-    public ResponseEntity<ProviderDTO> save(@Valid @RequestBody ProviderDTO dto) throws Exception{
-        Provider obj = service.save(convertToEntity(dto));
+    public ResponseEntity<RoleDTO> save(@Valid @RequestBody RoleDTO dto) throws Exception{
+        Role obj = service.save(convertToEntity(dto));
 
         return new ResponseEntity<>(convertToDto(obj), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProviderDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody ProviderDTO dto) throws Exception{
-        //dto.setIdProvider(id);
-        Provider obj = service.update(convertToEntity(dto), id);
+    public ResponseEntity<RoleDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody RoleDTO dto) throws Exception{
+        //dto.setIdRole(id);
+        Role obj = service.update(convertToEntity(dto), id);
 
         return ResponseEntity.ok(convertToDto(obj));
     }
@@ -63,12 +63,12 @@ public class ProviderController {
     }
 
     ////////////////////////////
-    private ProviderDTO convertToDto(Provider obj){
-        return modelMapper.map(obj, ProviderDTO.class);
+    private RoleDTO convertToDto(Role obj){
+        return modelMapper.map(obj, RoleDTO.class);
     }
 
-    private Provider convertToEntity(ProviderDTO dto){
-        return modelMapper.map(dto, Provider.class);
+    private Role convertToEntity(RoleDTO dto){
+        return modelMapper.map(dto, Role.class);
     }
 
 
