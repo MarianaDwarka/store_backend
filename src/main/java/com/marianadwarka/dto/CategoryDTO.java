@@ -14,7 +14,7 @@ public class CategoryDTO {
     private Integer idCategory;
 
     @Size(min = 3)
-    private String nameCategory;
+    private String nameofCategory;
 
     @Size(min = 3)
     private String descriptionCategory;
