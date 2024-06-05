@@ -8,6 +8,7 @@ import com.marianadwarka.service.ICategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class CategoryController {
 
     //@Autowired
     private final ICategoryService service;// = new CategoryService();
+    @Qualifier("categoryMapper")
     private final ModelMapper modelMapper;
 
     @GetMapping
