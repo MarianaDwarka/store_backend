@@ -9,6 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+//@RequestMapping("${url.path}")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -71,6 +75,74 @@ public class CategoryController {
         return ResponseEntity.noContent().build();
         //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //////////////queries////////////////////
+    @GetMapping("/find/name/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByName(@PathVariable("name") String name){
+        List<CategoryDTO> list = service.findByName(name).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/find/name/like/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByNameLike(@PathVariable("name") String name){
+        List<CategoryDTO> list = service.findByNameLike(name).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/find/name/enabled")
+    public ResponseEntity<List<CategoryDTO>> findByNameAndEnabled(@RequestParam("name") String name, @RequestParam("enabled") boolean enabled){
+        List<CategoryDTO> list = service.findByNameAndEnabled(name, enabled).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/get/name/description1")
+    public ResponseEntity<List<CategoryDTO>> getNameAndDescription1(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception {
+        List<CategoryDTO> lst = service.getNameAndDescription1(name, description).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
+    @GetMapping("/get/name/description2")
+    public ResponseEntity<List<CategoryDTO>> getNameAndDescription2(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception {
+        List<CategoryDTO> lst = service.getNameAndDescription2(name, description).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
+    @GetMapping("/get/name/sql")
+    public ResponseEntity<List<CategoryDTO>> getNameSQL(@RequestParam("name") String name) throws Exception {
+        List<CategoryDTO> lst = service.getNameSQL(name).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(lst);
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<CategoryDTO>> findPage(Pageable pageable){
+        Page<CategoryDTO> page = service.findPage(pageable).map(this::convertToDto);
+
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/pagination2")
+    public ResponseEntity<Page<CategoryDTO>> findPage2(
+            @RequestParam(name = "p", defaultValue = "0") int page,
+            @RequestParam(name = "s", defaultValue = "3") int size
+    ){
+        Page<CategoryDTO> pageDTO = service.findPage(PageRequest.of(page, size)).map(this::convertToDto);
+
+        return ResponseEntity.ok(pageDTO);
+    }
+
+    @GetMapping("/order")
+    public ResponseEntity<List<CategoryDTO>> findAllOrder(@RequestParam(name = "param", defaultValue = "ASC") String param){
+        List<CategoryDTO> list = service.findAllOrder(param).stream().map(this::convertToDto).toList();
+
+        return ResponseEntity.ok(list);
+    }
+
 
     ////////////////////////////
     private CategoryDTO convertToDto(Category obj){

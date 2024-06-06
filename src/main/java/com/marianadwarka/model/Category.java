@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
+@Entity//(name = "category_entity")
 //@Table(name = "tbl_category", schema = "sistemas")
 public class Category {
 
@@ -28,4 +28,8 @@ public class Category {
     @Column(nullable = false)
     private boolean enabled;
 
+    public Category(String name, boolean enabled) {
+        this.name = name;
+        this.enabled = enabled;
+    }
 }
