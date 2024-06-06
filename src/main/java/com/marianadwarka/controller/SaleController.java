@@ -61,6 +61,56 @@ public class SaleController {
         return ResponseEntity.noContent().build();
     }
 
+    /////////////////////////
+    @GetMapping("/resume")
+    public ResponseEntity<List<ProcedureDTO>> getSaleResume1(){
+        return ResponseEntity.ok(service.callProcedure1());
+    }
+
+    @GetMapping("/resume2")
+    public ResponseEntity<List<IProcedureDTO>> getSaleResume2(){
+        return ResponseEntity.ok(service.callProcedure2());
+    }
+
+    @GetMapping("/resume3")
+    public ResponseEntity<List<ProcedureDTO>> getSaleResume3(){
+        return ResponseEntity.ok(service.callProcedure3());
+    }
+
+
+    @GetMapping("/resume4")
+    public ResponseEntity<Void> getSaleResume4(){
+        service.callProcedure4();
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/mostexpensive")
+    public ResponseEntity<SaleDTO> getMostExpensive(){
+        SaleDTO dto = convertToDto(service.getSaleMostExpensive());
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/bestseller")
+    public ResponseEntity<String> getBestSeller(){
+        String person = service.getBestSellerPerson();
+
+        return ResponseEntity.ok(person);
+    }
+
+    @GetMapping("/sellercount")
+    public ResponseEntity<Map<String, Long>> getSellerCount(){
+        Map<String, Long> byUser = service.getSalesCountBySeller();
+
+        return ResponseEntity.ok(byUser);
+    }
+
+    @GetMapping("/bestproduct")
+    public ResponseEntity<Map<String, Double>> getBestProduct(){
+        Map<String, Double> byProduct = service.getMostSellerProduct();
+
+        return ResponseEntity.ok(byProduct);
+    }
 
     ////////////////////////////
     private SaleDTO convertToDto(Sale obj){
