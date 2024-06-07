@@ -82,6 +82,36 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("$.data[0].nameofCategory", is("TV")));
     }
 
+    @Test
+    void createTest() throws Exception {
+        Mockito.when(service.save(any())).thenReturn(CATEGORY_3);
+        Mockito.when(modelMapper.map(CATEGORY_3, CategoryDTO.class)).thenReturn(CATEGORYDTO_3);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/categories")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_3))
+                )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.enabledCategory", is(true)));
+    }
+
+    @Test
+    void updateTest() throws Exception {
+        final int ID = 2;
+
+        Mockito.when(service.update(any(), any())).thenReturn(CATEGORY_2);
+        Mockito.when(modelMapper.map(CATEGORY_2, CategoryDTO.class)).thenReturn(CATEGORYDTO_2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_2))
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabledCategory", is(true)));
+    }
+
 
 }
 
