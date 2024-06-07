@@ -21,6 +21,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -127,6 +128,31 @@ public class CategoryControllerTest {
                 )
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ModelNotFoundException));
+    }
+
+    @Test
+    void deleteTest() throws Exception {
+        final int ID = 1;
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deleteErrorTest() throws Exception {
+        final int ID = 99;
+
+        Mockito.doThrow(new ModelNotFoundException("ID NOT VALID: " + ID)).when(service).delete(ID);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(ModelNotFoundException.class, result.getResolvedException()));
     }
 
 
