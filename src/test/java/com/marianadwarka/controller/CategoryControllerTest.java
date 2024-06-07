@@ -2,6 +2,7 @@ package com.marianadwarka.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marianadwarka.dto.CategoryDTO;
+import com.marianadwarka.exception.ModelNotFoundException;
 import com.marianadwarka.model.Category;
 import com.marianadwarka.service.ICategoryService;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,6 +112,21 @@ public class CategoryControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.enabledCategory", is(true)));
+    }
+
+    @Test
+    void updateErrorTest() throws Exception {
+        final int ID = 99;
+
+        Mockito.when(service.update(any(), any())).thenThrow(new ModelNotFoundException("ID NOT VALID: " + ID));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/categories/" + ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CATEGORYDTO_2))
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ModelNotFoundException));
     }
 
 
