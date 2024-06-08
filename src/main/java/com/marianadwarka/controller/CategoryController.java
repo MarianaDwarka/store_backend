@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class CategoryController {
     @Qualifier("categoryMapper")
     private final ModelMapper modelMapper;
 
+    @PreAuthorize("@authService.hasAccess()")
+    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<GenericResponseRecord<CategoryDTO>> readAll() throws Exception{
         List<CategoryDTO> list = service.readAll().stream().map(this::convertToDto).toList();
