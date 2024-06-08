@@ -1,6 +1,5 @@
 package com.marianadwarka.security;
 
-//Clase S2
 
 import com.marianadwarka.model.User;
 import com.marianadwarka.repo.IUserRepo;
@@ -14,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//Clase S2
 
 @Service
 @RequiredArgsConstructor

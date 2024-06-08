@@ -17,6 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 //Clase S1
+
 @Component
 public class JwtTokenUtil implements Serializable {
 
