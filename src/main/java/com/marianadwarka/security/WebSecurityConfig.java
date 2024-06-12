@@ -21,7 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-
+@Profile(value = {"dev", "qa", "prod"})
+//Clase S7
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity //con esto funciona el @PreAuthorize
