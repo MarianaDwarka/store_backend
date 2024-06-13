@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 //@RequestMapping("${url.path}")
+@CrossOrigin(origins = "*") //permite a cualquiera que quiera consumir el backend (Esto lo usé desde Angular)
 @RequiredArgsConstructor
 public class CategoryController {
 
